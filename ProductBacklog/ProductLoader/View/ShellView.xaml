@@ -1,0 +1,58 @@
+﻿<UserControl
+  x:Class="ProductBacklog.ShellView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ProductBacklog.Composition"
+  xmlns:controls="clr-namespace:ProductBacklog.Controls">
+
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+      </ResourceDictionary.MergedDictionaries>
+      <local:MvvmTemplateSelector x:Key="MvvmTemplateSelector"/>
+
+      <Style x:Key="ReadOnlyTextBox" TargetType="TextBox">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="TextBox">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+      
+    </ResourceDictionary>
+  </UserControl.Resources>
+  
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+
+    <!-- Commands area -->
+    <Border Grid.Row="0" BorderBrush="#FFADB2B5">
+      <StackPanel Orientation="Horizontal" Margin="3">
+        <ContentPresenter Grid.Row="1"
+            ContentTemplateSelector="{Binding Source={StaticResource MvvmTemplateSelector}}"
+            Content="{Binding Path=ContextProvider}"/>
+
+        <Button Command="{Binding Client.BusinessDateCommand}" Margin="3">
+          <StackPanel Orientation="Vertical">
+            <Image Source="{Binding Client.Image}" Width="24" Height="24" />
+          </StackPanel>
+        </Button>
+
+        <TextBox Text="{Binding Client.Categories.SelectedCategory}" IsReadOnly="true" Style="{StaticResource ReadOnlyTextBox}" />
+      </StackPanel>
+    </Border>
+
+    <!-- Client Area -->
+    <ContentPresenter Grid.Row="1"
+        ContentTemplateSelector="{Binding Source={StaticResource MvvmTemplateSelector}}"
+        Content="{Binding Path=Client}"/>
+  </Grid>
+</UserControl>

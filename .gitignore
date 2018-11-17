@@ -1,0 +1,10 @@
+
+ProductBacklog/bin/Debug/
+
+ProductBacklog/obj/Debug/
+
+packages/
+
+\.vs/ProductLoader/v15/
+
+\.vs/ProductLoader/DesignTimeBuild/
